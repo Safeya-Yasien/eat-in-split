@@ -24,7 +24,12 @@ function App() {
     <div className="app">
       <div className="sidebar">
         <FriendsList />
+        <AddFriendForm />
+        <div className="d-flex justify-content-end align-items-center add-button">
+          <Button>Add Friend</Button>
+        </div>
       </div>
+      <SplitFormBill />
     </div>
   );
 }
@@ -65,7 +70,65 @@ const Friend = ({ friend }) => {
           )}
         </div>
       </div>
-      <button className="button">Submit</button>
+      <Button>Select</Button>
     </li>
+  );
+};
+
+const Button = ({ children }) => {
+  return <button className="button">{children}</button>;
+};
+
+const AddFriendForm = () => {
+  return (
+    <form className="d-flex flex-column gap-4 add-friend-form">
+      <div className="d-flex flex-column gap-4">
+        <div className="d-flex align-items-center gap-4 justify-content-between">
+          <label className="fs-4">👩🏼‍🤝‍🧑🏻 Friend Name</label>
+          <input type="text" />
+        </div>
+        <div className="d-flex align-items-center gap-4 justify-content-between">
+          <label className="fs-4">💥 Image URL</label>
+          <input type="text" />
+        </div>
+      </div>
+      <div className="d-flex justify-content-end">
+        <Button>Add</Button>
+      </div>
+    </form>
+  );
+};
+
+const SplitFormBill = () => {
+  return (
+    <div className="d-flex flex-column gap-4 split-bill-form">
+      <h3 className="text-uppercase">split a bill with clark</h3>
+      <form className="d-flex flex-column gap-4 ">
+        <div className="d-flex flex-column gap-4">
+          <div className="d-flex align-items-center gap-4 justify-content-between">
+            <label className="fs-4">💰 Bill value</label>
+            <input type="text" />
+          </div>
+          <div className="d-flex align-items-center gap-4 justify-content-between">
+            <label className="fs-4">🧍‍♀️ Your expense</label>
+            <input type="text" />
+          </div>
+          <div className="d-flex align-items-center gap-4 justify-content-between">
+            <label className="fs-4">👩🏼‍🤝‍🧑🏻 Clark's expense:</label>
+            <input type="text" disabled />
+          </div>
+          <div className="d-flex align-items-center gap-4 justify-content-between">
+            <label className="fs-4">🤑 Who is paying the bill?</label>
+            <select>
+              <option value="user">You</option>
+              <option value="friend">You</option>
+            </select>
+          </div>
+        </div>
+        <div className="d-flex justify-content-end">
+          <Button>Split bill</Button>
+        </div>
+      </form>
+    </div>
   );
 };
