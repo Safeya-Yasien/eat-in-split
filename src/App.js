@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const initialFriends = [
   {
     id: 118836,
@@ -19,14 +21,30 @@ const initialFriends = [
   },
 ];
 
+const Button = ({ children, onClick }) => {
+  return (
+    <button className="button" onClick={onClick}>
+      {children}
+    </button>
+  );
+};
+
 function App() {
+  const [showAddFriend, setShowAddFriend] = useState(false);
+
+  const handleShowAddFriend = () => {
+    return setShowAddFriend((show) => !show);
+  };
+
   return (
     <div className="app">
       <div className="sidebar">
         <FriendsList />
-        <AddFriendForm />
+        {showAddFriend && <AddFriendForm />}
         <div className="d-flex justify-content-end align-items-center add-button">
-          <Button>Add Friend</Button>
+          <Button onClick={handleShowAddFriend}>
+            {!showAddFriend ? "Add Friend" : "Close"}
+          </Button>
         </div>
       </div>
       <SplitFormBill />
@@ -73,10 +91,6 @@ const Friend = ({ friend }) => {
       <Button>Select</Button>
     </li>
   );
-};
-
-const Button = ({ children }) => {
-  return <button className="button">{children}</button>;
 };
 
 const AddFriendForm = () => {
