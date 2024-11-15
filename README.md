@@ -1,3 +1,11 @@
+# Live Demo:
+
+https://eat-in-split.netlify.app/
+
+# eat-in-split
+
+This is a React app that allows users to manage their friends' list, and split bills with them. Built with React, it uses Bootstrap for styling and layout, and JavaScript for functionality.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
