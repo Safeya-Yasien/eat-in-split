@@ -32,6 +32,7 @@ const Button = ({ children, onClick }) => {
 function App() {
   const [showAddFriend, setShowAddFriend] = useState(false);
   const [friends, setFriends] = useState(initialFriends);
+  const [selectedFriend, setSelectedFriend] = useState(null);
 
   const handleShowAddFriend = () => {
     return setShowAddFriend((show) => !show);
@@ -42,10 +43,19 @@ function App() {
     setShowAddFriend(false);
   };
 
+  const handleSelection = (friend) => {
+    setSelectedFriend((curr) => (curr?.id === friend.id ? null : friend));
+    setShowAddFriend(false);
+  };
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList friends={friends} />
+        <FriendsList
+          friends={friends}
+          selectedFriend={selectedFriend}
+          onSelection={handleSelection}
+        />
         {showAddFriend && <AddFriendForm onAddFriend={handleAddFriend} />}
         <div className="d-flex justify-content-end align-items-center add-button">
           <Button onClick={handleShowAddFriend}>
@@ -53,26 +63,37 @@ function App() {
           </Button>
         </div>
       </div>
-      <SplitFormBill />
+      {selectedFriend && <SplitFormBill selectedFriend={selectedFriend} />}
     </div>
   );
 }
 
 export default App;
 
-const FriendsList = ({ friends }) => {
+const FriendsList = ({ friends, onSelection, selectedFriend }) => {
   return (
     <ul className="d-flex flex-column gap-4">
       {friends.map((friend) => (
-        <Friend friend={friend} key={friend.id} />
+        <Friend
+          friend={friend}
+          key={friend.id}
+          selectedFriend={selectedFriend}
+          onSelection={onSelection}
+        />
       ))}
     </ul>
   );
 };
 
-const Friend = ({ friend }) => {
+const Friend = ({ friend, onSelection, selectedFriend }) => {
+  const isSelected = selectedFriend?.id === friend.id;
+
   return (
-    <li className="d-flex gap-4 friend-item align-items-center justify-content-between">
+    <li
+      className={`${
+        isSelected ? "selected" : ""
+      } d-flex gap-4 friend-item align-items-center justify-content-between`}
+    >
       <div className="d-flex align-items-center gap-3">
         <img src={friend.image} alt={friend.name} className="rounded-circle" />
         <div>
@@ -92,7 +113,9 @@ const Friend = ({ friend }) => {
           )}
         </div>
       </div>
-      <Button>Select</Button>
+      <Button onClick={() => onSelection(friend)}>
+        {!isSelected ? "Select" : "Close"}
+      </Button>
     </li>
   );
 };
@@ -150,10 +173,12 @@ const AddFriendForm = ({ onAddFriend }) => {
   );
 };
 
-const SplitFormBill = () => {
+const SplitFormBill = ({ selectedFriend }) => {
   return (
     <div className="d-flex flex-column gap-4 split-bill-form">
-      <h3 className="text-uppercase">split a bill with clark</h3>
+      <h3 className="text-uppercase">
+        split a bill with {selectedFriend.name}
+      </h3>
       <form className="d-flex flex-column gap-4 ">
         <div className="d-flex flex-column gap-4">
           <div className="d-flex align-items-center gap-4 justify-content-between">

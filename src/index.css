@@ -42,6 +42,9 @@ ul {
 .friend-item:hover {
   background-color: #fdf7ed;
 }
+.selected {
+  background-color: #fdf7ed;
+}
 .button {
   background-color: #fd9f41;
   border: none;
